@@ -1,0 +1,57 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql" // or any other provider, e.g., MySQL
+  url      = env("DATABASE_URL")
+}
+
+model Role {
+  role_id Int    @id @default(autoincrement())
+  role    String
+  users   User[]
+}
+
+model User {
+  id          Int           @id @default(autoincrement())
+  name        String
+  password    String
+  email       String        @unique
+  course_id   Int?
+  role_id     Int
+  courses     Course[]      @relation("UserCourses")
+  role        Role          @relation(fields: [role_id], references: [role_id])
+  performance Performance[]
+}
+
+model Course {
+  course_id    Int           @id @default(autoincrement())
+  name         String
+  description  String?
+  trainer_id   Int?          @unique // Ensure this is optional
+  start_date   DateTime?
+  end_date     DateTime?
+  users        User[]        @relation("UserCourses")
+  // trainer      Trainer?      @relation(fields: [trainer_id], references: [trainer_id]) // Make this optional
+  performances Performance[] // One-to-many relationship with Performance
+}
+
+// model Trainer {
+//   trainer_id Int     @id @default(autoincrement())
+//   name       String
+//   course     Course? @relation // One-to-one relation with Course
+// }
+
+model Performance {
+  emp_id    Int
+  course_id Int
+  mark1     Float
+  mark2     Float?
+  avg_mark  Float?
+
+  user   User   @relation(fields: [emp_id], references: [id])
+  course Course @relation(fields: [course_id], references: [course_id])
+
+  @@id([emp_id, course_id]) // Composite primary key
+}

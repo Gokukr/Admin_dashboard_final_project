@@ -1,0 +1,26 @@
+role:
+    role_id,
+    role
+user:
+    id,
+    name,
+    email,
+    course_id,
+    role_id
+course:
+    course_id,
+    name,
+    user_id,
+    trainer_id,
+    start and end date
+trainer:
+    trainer_id,
+    name,
+    course_id
+performance:
+    emp_id,
+    course_id,
+    mark1,
+    mark2,
+    avg_mark (avg of mark1 and mark2)
+    
