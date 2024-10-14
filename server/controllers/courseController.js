@@ -41,16 +41,17 @@ exports.addCourse = async (req, res) => {
         data: { course_id: newCourse.course_id },
       });
       console.log(updatedUsers, "users updated");
-      return updatedUsers;
+      // return updatedUsers;
+      return res.status(200).json({ message: "sucessful" });
     } catch (error) {
       console.log("error in updating", error);
     }
 
     // Step 3: Update the course_id for the trainer
-    await prisma.user.update({
-      where: { id: trainerId },
-      data: { course_id: newCourse.id },
-    });
+    // await prisma.user.update({
+    //   where: { id: trainerId },
+    //   data: { course_id: newCourse.id },
+    // });
 
     // Step 4: Update the course_id for all users with role_id = 3 (users)
 
@@ -60,10 +61,10 @@ exports.addCourse = async (req, res) => {
     //     .status(404)
     //     .json({ message: "No users with role_id = 3 found to update." });
     // }
-    res.status(201).json({
-      message: `Course added and assigned to trainer and ${updatedUsers.count} users`,
-      newCourse,
-    });
+    // res.status(201).json({
+    //   message: `Course added and assigned to trainer and ${updatedUsers.count} users`,
+    //   newCourse,
+    // });
   } catch (error) {
     console.error("Error adding course and assigning trainer/users:", error);
 

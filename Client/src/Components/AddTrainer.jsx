@@ -39,7 +39,7 @@ const AddTrainer = () => {
       );
       setTrainers([...trainers, response.data.trainer]); // Add the new trainer to the list
       setShowForm(false); // Hide modal after adding trainer
-      navigate("/admin-dashboard"); // Navigate to admin-dashboard after form submission
+      // Navigate to admin-dashboard after form submission
     } catch (err) {
       console.error("Failed to add trainer:", err);
     }
@@ -93,28 +93,39 @@ const AddTrainer = () => {
         )}
 
         {/* Centered Trainer Table */}
-        <div className="w-full flex justify-center">
-          <table className="w-3/4 border-collapse border border-dark mb-8 rounded-md overflow-hidden shadow-lg">
-            <thead className="bg-dark text-whiter">
-              <tr>
-                <th className="border border-light p-2 text-left">ID</th>
-                <th className="border border-light p-2 text-left">Name</th>
-                <th className="border border-light p-2 text-left">Email</th>
-              </tr>
-            </thead>
-            <tbody>
-              {trainers.map((trainer) => (
-                <tr
-                  key={trainer.id}
-                  className="hover:bg-light transition duration-200"
-                >
-                  <td className="border border-dark p-2">{trainer.id}</td>
-                  <td className="border border-dark p-2">{trainer.name}</td>
-                  <td className="border border-dark p-2">{trainer.email}</td>
+        <div className="mt-6 flex justify-center">
+          <div className="overflow-x-auto w-1/2">
+            <h2 className="text-2xl font-bold mb-4 text-center text-dark">
+              Trainer List
+            </h2>
+            <table className="w-full border-collapse border border-dark mb-8 rounded-md overflow-hidden shadow-lg">
+              <thead className="bg-dark text-whiter">
+                <tr>
+                  <th className="border border-dark p-2 text-center">ID</th>
+                  <th className="border border-dark p-2 text-center">Name</th>
+                  <th className="border border-dark p-2 text-center">Email</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {trainers.map((trainer) => (
+                  <tr
+                    key={trainer.id}
+                    className="hover:bg-light transition duration-200"
+                  >
+                    <td className="border border-dark p-2 text-center">
+                      {trainer.id}
+                    </td>
+                    <td className="border border-dark p-2 text-center">
+                      {trainer.name}
+                    </td>
+                    <td className="border border-dark p-2 text-center">
+                      {trainer.email}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
       </main>
     </div>

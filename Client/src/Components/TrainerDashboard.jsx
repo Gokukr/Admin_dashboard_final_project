@@ -155,7 +155,7 @@ const TrainerDashboard = () => {
             {reqEmployees.map((employee) => (
               <tr
                 key={employee.id}
-                className={`hover:bg-dark transition duration-200 ${
+                className={`hover:bg-light transition duration-200 ${
                   submittedMarks[employee.id] ? "bg-green-200" : ""
                 }`}
               >

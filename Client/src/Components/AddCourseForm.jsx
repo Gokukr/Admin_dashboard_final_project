@@ -13,8 +13,6 @@ const AddCourseForm = () => {
   const [loading, setLoading] = useState(false); // Add loading state
   const navigate = useNavigate(); // Initialize navigate
 
-  console.log(courseName);
-
   useEffect(() => {
     // Fetch trainers from the backend
     const fetchTrainers = async () => {
@@ -28,15 +26,11 @@ const AddCourseForm = () => {
             },
           }
         );
-        console.log(response.data, "complete");
-
         const trainerNames = response.data.map((trainer) => ({
           id: trainer.id, // Ensure this matches your API response
           name: trainer.name,
           role: trainer.role_id,
         }));
-        console.log("trainerDetails", trainerNames);
-
         setTrainers(trainerNames); // Set the trainers state
       } catch (error) {
         console.error("Error fetching trainers:", error);
@@ -66,30 +60,27 @@ const AddCourseForm = () => {
           headers: {
             Authorization: `Bearer ${token}`, // Include Authorization header
           },
-        } // Ensure this is the correct route
+        }
       );
 
-      console.log(courseResponse.data);
-
-      // Assuming the backend returns the newly added course data
-      const newCourse = courseResponse.data;
-      console.log(newCourse);
+      // Log the response to see if everything is fine
+      console.log("Response from API:", courseResponse.data);
+      setMessage("Course added and assigned to trainer successfully!");
+      toast.success("Course added successfully!");
 
       // Clear form fields after submission
       setCourseName("");
       setDescription("");
       setSelectedTrainer("");
-      setMessage("Course added and assigned to trainer successfully!");
-      toast.success("Course added successfully!");
 
-      setTimeout(() => {
-        navigate("/admin-dashboard");
-      }, 3000);
+      // Navigate immediately after successful submission
+      navigate("/admin-dashboard");
     } catch (error) {
       console.error("Error adding course and assigning to trainer:", error);
       setMessage("Failed to add course and assign to trainer.");
       toast.error("Failed to add course.");
     } finally {
+      // Make sure loading is set to false after everything
       setLoading(false);
     }
   };
@@ -114,23 +105,6 @@ const AddCourseForm = () => {
           required
         />
       </div>
-      {/* Uncomment if you want to include description field */}
-      {/* <div className="mb-4">
-        <label
-          htmlFor="description"
-          className="block text-mid font-medium mb-2"
-        >
-          Description
-        </label>
-        <textarea
-          id="description"
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
-          className="w-full px-4 py-2 border border-mid rounded focus:outline-none focus:ring-2 focus:ring-mid"
-          placeholder="Enter course description"
-          required
-        />
-      </div> */}
       <div className="mb-4">
         <label htmlFor="trainer" className="block text-mid font-medium mb-2">
           Trainer
@@ -140,7 +114,6 @@ const AddCourseForm = () => {
           value={selectedTrainer}
           onChange={(e) => {
             setSelectedTrainer(e.target.value);
-            console.log(selectedTrainer);
           }} // This will update the state
           className="w-full px-4 py-2 border border-mid rounded focus:outline-none focus:ring-2 focus:ring-mid"
           required
@@ -169,6 +142,7 @@ const AddCourseForm = () => {
           </button>
         )}
       </div>
+      <ToastContainer /> {/* To display toast notifications */}
     </form>
   );
 };

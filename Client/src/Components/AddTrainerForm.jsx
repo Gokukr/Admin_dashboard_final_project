@@ -2,11 +2,13 @@ import React, { useState } from "react";
 import axios from "axios"; // Axios for HTTP requests
 import { ToastContainer, toast } from "react-toastify";
 import { ClipLoader } from "react-spinners";
+import { useNavigate } from "react-router-dom";
 
 const AddTrainerForm = ({ onSubmit }) => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false); // Add loading state
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -20,6 +22,7 @@ const AddTrainerForm = ({ onSubmit }) => {
       setName("");
       setEmail("");
       toast.success("trainer added successfully");
+      navigate("/admin-dashboard");
     } catch (error) {
       console.error("Error submitting trainer form:", error);
     } finally {
